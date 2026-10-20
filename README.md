@@ -41,8 +41,8 @@ needed. This onboarding screen does not provide a public website URL.
 | Route | Experience |
 | --- | --- |
 | / | Skippable, session-once intro; kinetic cover; founder/collective/Atlas/archive previews |
-| /story | Four documentary scenes; scroll progress; paired founder studies transform toward the collective |
-| /founders | Expanding split-screen; individually selectable Selim/Enes story panels |
+| /story | Four scroll-synced scenes; masked portrait reveals; a moving, captioned founder diptych |
+| /founders | Expanding portrait split-screen; letter reveals, pointer depth, keyboard selection, individual story panels |
 | /mind-and-motion | Visitor-controlled five-theme typography playground with pointer depth |
 | /collective | Asymmetric media field, pointer perspective, fullscreen keyboard/touch viewer |
 | /city | Geographic UAE/Abu Dhabi Run Atlas, camera controls, markers, chapter panels |
@@ -66,12 +66,22 @@ use native scrolling, with GSAP cleanup on route changes and preference changes.
 - `lib/geo.ts`: common projection and camera framing.
 - `content/geo/README.md`: geographic provenance, license, and coordinate verification.
 
-The owner identified the first/left chat photo as **Selim**, and the second/right
-photo as **Enes**. Those identities are reflected in the founder registry.
-The original image files were not mounted in the workspace and had no
-downloadable file references. No fictional portraits or stock replacements
-have been introduced. Add the originals and set the corresponding local media
-paths in `content/site.ts`; exact expected paths are in `public/media/README.md`.
+The owner identified the running photo as **Selim**, and the close portrait in
+a white top as **Enes**. Selim remains on the left, Enes on the right.
+The originals were uploaded in commits `8edbbbc` (Selim) and `2792c7e` (Enes),
+then renamed to `public/media/founders/selim.jpg` and `enes.jpg`. Both images
+retain their original bytes and are served through responsive Next.js image
+optimization. A logo included in the first upload is retained separately
+under its upload filename and is not used as a portrait.
+No fictional portraits or stock replacements have been introduced. Both pages
+and the home preview share the founder registry in `content/site.ts`.
+See `public/media/README.md` for expected paths and remaining assets.
+
+Portrait entrance and pointer motion use separate layers to avoid competing
+transforms. Hover or keyboard focus previews a panel; selection keeps it open;
+Escape or “Back to the duo” resets it. Phones retain equal portrait widths and
+support tap selection. Reduced motion disables entrance, pointer, and layout
+animation, including when the preference changes during a visit.
 
 Founder biographies, motivations, visions, and optional quotes remain null
 until supplied. The UI explicitly marks these as pending. The founding-story
@@ -106,7 +116,7 @@ Map motion respects reduced motion, and decorative marker pulses stop after
 
 ## Missing assets
 
-The official logo, original founder photographs, community photographs, and
+Official logo integration, community photographs, and
 identified Run 001 photographs/footage remain outstanding. All media studies
 are explicitly labeled; unrelated photographs are not attributed to Run 001.
 Future video and audio are optional. See `public/media/README.md`.

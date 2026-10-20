@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Modal } from "./modal";
 import { Wordmark } from "./wordmark";
 
@@ -34,16 +33,10 @@ export function ExperienceMotion() {
   const path = usePathname();
   const previous = useRef(path);
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
     const match = gsap.matchMedia();
     match.add("(prefers-reduced-motion: no-preference)", () => {
-      const main = document.querySelector("main");
-      if (!main) return;
-      const headlines = main.querySelectorAll("[data-title] .line-inner");
-      if (headlines.length) gsap.from(headlines, { yPercent: 105, stagger: .08, duration: .85, ease: "power3.out" });
-      main.querySelectorAll<HTMLElement>("[data-reveal]").forEach(element => gsap.from(element, { y: 30, opacity: 0, duration: .7, ease: "power2.out", scrollTrigger: { trigger: element, start: "top 94%", once: true } }));
-      main.querySelectorAll<HTMLElement>(".ribbon-track").forEach(element => gsap.to(element, { xPercent: -16, ease: "none", scrollTrigger: { trigger: element.parentElement, start: "top bottom", end: "bottom top", scrub: .7 } }));
-      main.querySelectorAll<HTMLElement>("[data-drift]").forEach(element => gsap.fromTo(element, { rotate: -3, yPercent: 3 }, { rotate: 3, yPercent: -3, ease: "none", scrollTrigger: { trigger: element, start: "top bottom", end: "bottom top", scrub: .5 } }));
+      // Page-wide title/reveal effects use CSS, leaving streamed page markup
+      // untouched until its own client components have hydrated.
       if (previous.current !== path) gsap.fromTo(".scene-wipe", { x: 0, xPercent: -105 }, { x: 0, xPercent: 105, duration: .55, ease: "power3.inOut" });
     });
     previous.current = path;

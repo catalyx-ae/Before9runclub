@@ -18,8 +18,8 @@ export type Founder = {
 };
 
 export const founders: Founder[] = [
-  { id: "selim", name: "Selim", role: "Co-founder", image: { kind: "image", src: null, alt: "Selim, co-founder of Before 9, running outdoors among palm trees" }, biography: null, motivation: null, vision: null, quote: null, expectedFile: "public/media/founders/selim.jpg" },
-  { id: "enes", name: "Enes", role: "Co-founder", image: { kind: "image", src: null, alt: "Enes, co-founder of Before 9, photographed outdoors among palm trees" }, biography: null, motivation: null, vision: null, quote: null, expectedFile: "public/media/founders/enes.jpg" },
+  { id: "selim", name: "Selim", role: "Co-founder", image: { kind: "image", src: "/media/founders/selim.jpg", alt: "Selim, co-founder of Before 9, running outdoors among palm trees" }, biography: null, motivation: null, vision: null, quote: null, expectedFile: "public/media/founders/selim.jpg" },
+  { id: "enes", name: "Enes", role: "Co-founder", image: { kind: "image", src: "/media/founders/enes.jpg", alt: "Enes, co-founder of Before 9, wearing a white top outdoors among palm trees" }, biography: null, motivation: null, vision: null, quote: null, expectedFile: "public/media/founders/enes.jpg" },
 ];
 
 export type GalleryItem = {

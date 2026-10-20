@@ -2,13 +2,16 @@
 
 ## Available now
 
-No official image or logo files are currently present in this repository.
-The founder photos are visible in chat, but their original binaries are not
-accessible in the cloud workspace. Identity was explicitly confirmed by the
-owner: **first/left photo = Selim; second/right photo = Enes**.
+Both founder photographs were supplied through GitHub: Selim in commit
+`8edbbbc`, Enes in `2792c7e`. They are connected at `founders/selim.jpg` and
+`founders/enes.jpg`, with the original bytes preserved.
+A square Before 9 logo was included in the first upload and is
+retained under its upload filename; it is not a founder portrait.
+Identity was explicitly confirmed by the owner:
+**running photo / left = Selim; white-top portrait / right = Enes**.
 
-All current artwork is an original, labeled graphic study. It is not real
-club photography, a recreation of the founder portraits, or the official logo.
+Remaining community/hero artwork is an original, labeled graphic study.
+It is not real club photography or a recreation of the founder portraits.
 
 ## Files needed
 
@@ -16,8 +19,8 @@ club photography, a recreation of the founder portraits, or the official logo.
 | --- | --- |
 | public/media/before9-logo.svg | Official approved logo, intact |
 | public/media/before9-dawn.webp | Authentic community hero/campaign image |
-| public/media/founders/selim.jpg | First/left chat photo: Selim running in black among palms |
-| public/media/founders/enes.jpg | Second/right chat photo: Enes's close portrait in a white top |
+| public/media/founders/selim.jpg | Integrated: Selim running in black among palms |
+| public/media/founders/enes.jpg | Integrated: Enes's close portrait in a white top |
 | public/media/community/*.webp | Approved community moments with descriptive alt text |
 | public/media/runs/001/*.webp | Identified photographs actually from Run 001, Reem Central Park |
 | public/media/runs/001/*.mp4 | Optional actual Run 001 footage with a static poster |
@@ -33,8 +36,10 @@ redesign is required. Set hero src/poster/kind there as well. The default media
 layout is a panel; `mediaLayout: "fullscreen"` enables a full-bleed treatment
 once real media is supplied. Images with embedded text stay in the panel layout.
 
-In `content/site.ts`, set each founder's image.src to its /media/founders/...
-path. The founder order remains Selim left, Enes right. Set the biography,
+In `content/site.ts`, each founder's image.src points to its /media/founders/...
+path once the original is available. The founder order remains Selim left,
+Enes right. The shared image component serves responsive Next.js optimized
+images on Founders, Our Story, and the home preview. Set the biography,
 motivation, vision and quote fields only from approved information.
 
 Replace community visual studies with approved `GalleryItem` records:

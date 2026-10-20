@@ -6,6 +6,7 @@ const routes = ["/", "/story", "/founders", "/mind-and-motion", "/collective", "
 test("all pages render unique metadata, working content, and no runtime errors", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", error => errors.push(error.message));
+  page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
   const titles = new Set<string>();
   for (const path of routes) {
     const response = await page.goto(path);

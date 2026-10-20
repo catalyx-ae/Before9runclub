@@ -1,0 +1,1 @@
+export default function Loading() { return <div className="route-loading page-gutter" role="status"><span className="mono">Opening the next chapter…</span><div className="loading-trail" aria-hidden="true" /><p>BEFORE 9</p></div>; }

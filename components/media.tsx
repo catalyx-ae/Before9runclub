@@ -3,16 +3,23 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { MediaAsset } from "@/content/brand";
+import { useInteractive } from "./use-interactive";
 
 /** Art-directed placeholders are deliberately labeled; they are not club assets. */
 export function CinematicMedia({ asset, variant, priority = false }: { asset: MediaAsset; variant: "dawn" | "friends"; priority?: boolean }) {
   const video = useRef<HTMLVideoElement>(null);
+  const ready = useInteractive();
   const [playing, setPlaying] = useState(false);
-  const [failedSource, setFailedSource] = useState<string | null>(null);
-  const available = Boolean(asset.src && failedSource !== asset.src);
+  const [failedSources, setFailedSources] = useState<string[]>([]);
+  const videoSource = asset.kind === "video" ? asset.src : null;
+  const imageSource = asset.kind === "image" ? asset.src : asset.poster ?? null;
+  const showVideo = Boolean(videoSource && !failedSources.includes(videoSource));
+  const showImage = Boolean(imageSource && !failedSources.includes(imageSource));
+  const available = showVideo || showImage;
+  function fail(source: string) { setFailedSources(previous => previous.includes(source) ? previous : [...previous, source]); }
 
   useEffect(() => {
-    if (!available || asset.kind !== "video") return;
+    if (!showVideo) return;
     const element = video.current;
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => {
@@ -21,7 +28,7 @@ export function CinematicMedia({ asset, variant, priority = false }: { asset: Me
     };
     preference.addEventListener("change", update);
     return () => preference.removeEventListener("change", update);
-  }, [asset.kind, available]);
+  }, [showVideo]);
 
   async function toggleVideo() {
     const element = video.current;
@@ -36,17 +43,17 @@ export function CinematicMedia({ asset, variant, priority = false }: { asset: Me
   return (
     <figure className={`cinematic-media media-${variant} ${available ? "has-media" : "is-placeholder"}`}>
       <div className="media-canvas" data-parallax>
-        {available && asset.src ? (
-          asset.kind === "video" ? (
+        {available ? (
+          showVideo && videoSource ? (
             <>
-              <video ref={video} src={asset.src} poster={asset.poster ?? undefined} muted loop playsInline preload="metadata" aria-label={asset.alt} onError={() => setFailedSource(asset.src)} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}>
+              <video ref={video} src={videoSource} poster={asset.poster ?? undefined} muted loop playsInline preload="metadata" aria-label={asset.alt} onError={() => fail(videoSource)} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}>
                 Your browser does not support this video.
               </video>
-              <button className="video-control mono" onClick={toggleVideo} aria-label={playing ? "Pause background footage" : "Play background footage"}>{playing ? "Pause footage Ⅱ" : "Play footage ▷"}</button>
+              <button disabled={!ready} className="video-control mono" onClick={toggleVideo} aria-label={playing ? "Pause background footage" : "Play background footage"}>{playing ? "Pause footage Ⅱ" : "Play footage ▷"}</button>
             </>
-          ) : (
-            <Image src={asset.src} alt={asset.alt} fill sizes={variant === "dawn" ? "(max-width: 700px) 100vw, 46vw" : "(max-width: 700px) 100vw, 50vw"} priority={priority} className="brand-image" onError={() => setFailedSource(asset.src)} />
-          )
+          ) : imageSource ? (
+            <Image src={imageSource} alt={asset.alt} fill sizes={variant === "dawn" ? "(max-width: 700px) 100vw, 46vw" : "(max-width: 700px) 100vw, 50vw"} priority={priority} className="brand-image" onError={() => fail(imageSource)} />
+          ) : null
         ) : variant === "dawn" ? <DawnStudy /> : <FriendshipStudy />}
       </div>
       {!available && (

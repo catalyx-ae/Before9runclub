@@ -1,86 +1,33 @@
+import Link from "next/link";
 import { brand } from "@/content/brand";
+import { founders } from "@/content/site";
+import { publishedRuns } from "@/content/runs";
 import { ArrowIcon, SparkIcon } from "@/components/icons";
 import { CinematicMedia } from "@/components/media";
-import { StoryMotion } from "@/components/motion";
-import { Navigation } from "@/components/navigation";
-import { Wordmark } from "@/components/wordmark";
+import { FounderVisual } from "@/components/founder-visual";
+import { Intro } from "@/components/experience";
+import { EditorialLink, Ribbon, NextChapter } from "@/components/editorial";
+import { Gallery } from "@/components/gallery";
+import { RunAtlas } from "@/components/run-atlas";
+import { pageMetadata } from "@/lib/metadata";
+export const metadata = pageMetadata("/");
 
 export default function Home() {
   const fullScreenMedia = brand.hero.mediaLayout === "fullscreen" && Boolean(brand.hero.media.src) && !brand.hero.media.containsText;
-  return (
-    <>
-      <a href="#main" className="skip-link">Skip to content</a>
-      <Navigation />
-      <main id="main" tabIndex={-1}>
-        <section id="beginning" className={`hero page-gutter${fullScreenMedia ? " hero-fullscreen" : ""}`} aria-labelledby="hero-heading">
-          <div className="hero-eyebrow mono">
-            <p><span className="tiny-spark" aria-hidden="true">✳</span>{brand.hero.eyebrow}</p>
-            <span className="chapter-index">01 / Before the city wakes</span>
-          </div>
-
-          <div className="hero-composition">
-            <div className="hero-type">
-              <h1 id="hero-heading" className="hero-title" aria-label={brand.hero.title.join(" ")}>
-                {brand.hero.title.map((line, index) => (
-                  <span className={`title-line title-line-${index + 1}`} key={line} aria-hidden="true"><span className="line-inner">{line}</span></span>
-                ))}
-              </h1>
-              <div className="hero-copy">
-                <p className="hero-intro">{brand.hero.intro}</p>
-                <p className="hero-description">{brand.hero.description}</p>
-                <a className="story-link" href="#our-story"><span>Meet Before 9</span><span className="round-arrow"><ArrowIcon /></span></a>
-              </div>
-            </div>
-            <div className="hero-visual">
-              <CinematicMedia asset={brand.hero.media} variant="dawn" priority />
-              <div className="hero-visual-note mono"><span className="location-dot" />Made of mornings.<br />Made of people.</div>
-            </div>
-            <SparkIcon className="hero-spark" />
-          </div>
-
-          <div className="hero-bottom mono">
-            <a href="#our-story" className="scroll-cue"><span className="scroll-cue-line" aria-hidden="true" />Scroll for the good part <span aria-hidden="true">↓</span></a>
-            <p>Running. Friendship. Everything in between.</p>
-          </div>
-        </section>
-
-        <div className="story-ribbon">
-          <p className="sr-only">Less sleep. More stories.</p>
-          <div className="ribbon-track" aria-hidden="true">
-            {[0, 1, 2].map(n => <span key={n}>Less sleep. <span className="ribbon-outline">More stories.</span><SparkIcon /></span>)}
-          </div>
-        </div>
-
-        <section id="our-story" className="story page-gutter" aria-labelledby="story-heading">
-          <div className="section-label mono" data-story-reveal><span>02 / The beginning of something</span><span>( Our story )</span></div>
-          <div className="story-opening">
-            <h2 id="story-heading" className="story-heading" data-story-reveal>{brand.story.heading[0]}<br /><span>{brand.story.heading[1]}</span></h2>
-            <div className="story-introduction" data-story-reveal>
-              <SparkIcon className="story-spark" />
-              <p>{brand.story.introduction}</p>
-              <span className="mono story-origin">A simple idea. A shared feeling.</span>
-            </div>
-          </div>
-
-          <div className="story-sequence">
-            <div className="story-media-wrap" data-story-reveal><CinematicMedia asset={brand.story.media} variant="friends" /></div>
-            <div className="story-copy">
-              <p className="mono story-note" data-story-reveal>It was never just about running.</p>
-              <div className="story-beats" data-story-reveal>{brand.story.beats.map((beat, i) => <p key={beat}><span className="mono beat-index">0{i + 1}</span>{beat}</p>)}</div>
-              <p className="story-body" data-story-reveal>{brand.story.body}</p>
-              <p className="story-closing" data-story-reveal>{brand.story.closing}</p>
-              <p className="editorial-status mono" data-story-reveal>{brand.story.editorialStatus}</p>
-            </div>
-          </div>
-          <div className="story-footnote mono"><span>Friendship first. Kilometres second.</span><span>From Abu Dhabi, with good energy. <SparkIcon /></span></div>
-        </section>
-      </main>
-      <footer className="site-footer page-gutter">
-        <a href="#beginning" className="logo-link" aria-label="Before 9 Run Club — back to top"><Wordmark /></a>
-        <p className="mono">{brand.location}<br /><span>See you before 9.</span></p>
-        <a className="footer-social" href={brand.instagram} target="_blank" rel="noopener noreferrer" aria-label="Follow the mornings on Instagram (opens in a new tab)"><span>Follow the mornings<span className="mono">@before9runclub</span></span><ArrowIcon diagonal /></a>
-      </footer>
-      <StoryMotion />
-    </>
-  );
+  const run = publishedRuns[0];
+  return <>
+    <Intro />
+    <section id="beginning" className={`hero page-gutter${fullScreenMedia ? " hero-fullscreen" : ""}`} aria-labelledby="hero-heading">
+      <div className="hero-eyebrow mono"><p><span className="tiny-spark" aria-hidden="true">✳</span>{brand.hero.eyebrow}</p><span className="chapter-index">01 / The wake-up call</span></div>
+      <div className="hero-composition"><div className="hero-type"><h1 id="hero-heading" className="hero-title" data-title aria-label={brand.hero.title.join(" ")}>{brand.hero.title.map((line, index) => <span className={`title-line title-line-${index + 1}`} key={line} aria-hidden="true"><span className="line-inner">{line}</span></span>)}</h1><div className="hero-copy" data-reveal><p className="hero-intro">{brand.hero.intro}</p><p className="hero-description">{brand.hero.description}</p><Link className="story-link" href="/story"><span>Step into our story</span><span className="round-arrow"><ArrowIcon /></span></Link></div></div><div className="hero-visual" data-reveal><CinematicMedia asset={brand.hero.media} variant="dawn" priority /><div className="hero-visual-note mono"><span className="location-dot" />Made of mornings.<br />Made of people.</div></div><SparkIcon className="hero-spark" /></div>
+      <div className="hero-bottom mono"><a href="#the-movement" className="scroll-cue"><span className="scroll-cue-line" aria-hidden="true" />The good part is just below <span aria-hidden="true">↓</span></a><p>Running. Friendship. Everything in between.</p></div>
+    </section>
+    <Ribbon />
+    <section id="the-movement" className="home-movement page-gutter"><div className="page-label mono"><span>The movement / A shared feeling</span><span>Abu Dhabi, UAE</span></div><div className="home-movement-grid"><h2 data-reveal>Move your body.<br />Clear your mind.<br /><span>Find your people.</span></h2><div><SparkIcon /><p>We’re Before 9. A running community built around the simple joy of showing up, moving together, and making something good out of a morning.</p><EditorialLink href="/mind-and-motion">More than the miles</EditorialLink></div></div></section>
+    <section className="home-founders page-gutter"><div className="home-section-top"><p className="mono">Two friends. One movement.</p><EditorialLink href="/founders">Meet Selim & Enes</EditorialLink></div><div className="home-founders-grid">{founders.map(founder => <Link href="/founders" className={`home-founder home-founder-${founder.id}`} key={founder.id}><FounderVisual founder={founder} /><span className="home-founder-name">{founder.name}<ArrowIcon diagonal /></span><span className="mono home-founder-role">Co-founder / Before 9</span></Link>)}</div><div className="home-founders-note"><h2>Before the club,<br />there was a friendship.</h2><p>Selim and Enes. Two friends with a simple idea: more movement, more connection, and more reasons to get out of bed.</p></div></section>
+    <section className="home-collective page-gutter"><div className="home-section-top"><div><p className="mono">The morning collective</p><h2>Good runs.<br /><span>Better people.</span></h2></div><EditorialLink href="/collective">Get to know the feeling</EditorialLink></div><Gallery compact /><p className="mono collection-status">Editorial visual studies / Awaiting real community photography.</p></section>
+    <section className="home-atlas page-gutter"><div className="home-section-top"><div><p className="mono orange">Our city / The Run Atlas</p><h2>Every orange light.<br /><span>A real chapter.</span></h2></div><EditorialLink href="/city" light>Explore our city</EditorialLink></div><RunAtlas compact /></section>
+    {run && <section className="home-archive page-gutter"><p className="mono">From the archive / The collection begins</p><Link href={`/archive/${run.id}`}><span className="home-archive-number">{run.id}</span><div><span className="mono">{run.location} / {run.city}</span><h2>{run.title}</h2><p>{run.description}</p></div><ArrowIcon diagonal /></Link><EditorialLink href="/archive">Open the full archive</EditorialLink></section>}
+    <NextChapter href="/connect" label="See you before 9." number="08" />
+  </>;
 }

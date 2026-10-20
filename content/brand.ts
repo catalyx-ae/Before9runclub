@@ -21,7 +21,7 @@ export const brand = {
     // "fullscreen" places footage/stills behind the cover once real media is supplied.
     mediaLayout: "panel" as "panel" | "fullscreen",
     eyebrow: "A little earlier. A little more alive.",
-    title: ["Before", "the city", "wakes."],
+    title: ["Wake up.", "Show up.", "Feel alive."],
     intro: "Some mornings are worth getting up for.",
     description: "For the movement. For the laughter. For the people you find along the way.",
     media: {

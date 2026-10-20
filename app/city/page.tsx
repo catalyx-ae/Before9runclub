@@ -1,0 +1,7 @@
+import { PageLabel, NextChapter } from "@/components/editorial";
+import { RunAtlas } from "@/components/run-atlas";
+import { pageMetadata } from "@/lib/metadata";
+export const metadata = pageMetadata("/city");
+export default function CityPage() {
+  return <><section className="city-page-hero page-gutter"><PageLabel number="06">Our city / Abu Dhabi, UAE</PageLabel><div className="city-heading-wrap"><h1 className="display-heading" data-title><span className="title-line"><span className="line-inner">Our city.</span></span><span className="title-line"><span className="line-inner orange">Our playground.</span></span></h1><div className="city-coordinate mono"><span>24° N / 54° E</span><p>Between the everyday<br />and a new way to begin.</p></div></div><div className="city-editorial"><p>The city wakes up differently when you’re already out in it.</p><p>Abu Dhabi is home to Before 9. The setting for shared mornings, familiar faces, and the chapters we’re making together.</p></div></section><section className="city-atlas-section page-gutter" id="run-atlas"><div className="atlas-section-heading"><div><p className="mono orange">The Before 9 Run Atlas</p><h2>Every run<br /><span>has a story.</span></h2></div><p>Every orange light marks a real chapter.<br />Begin with 001. See where it takes you.</p></div><RunAtlas /></section><NextChapter href="/archive" label="Open the archive." number="07" /></>;
+}
